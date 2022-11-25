@@ -6,9 +6,9 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Text, Float, Date
 
-
-measurements = pd.read_csv("C:\kodilla\Mod6\clean_measure.csv")
-stations = pd.read_csv("C:\kodilla\Mod6\clean_stations.csv")
+#poprawki
+measurements = pd.read_csv("sqlal/clean_measure.csv")
+stations = pd.read_csv("sqlal/clean_stations.csv")
 
 engine = create_engine("sqlite:///database.db")
 conn = engine.connect()
@@ -62,3 +62,4 @@ conn.execute(Stable.insert(), Sdata)
 result = conn.execute("SELECT * FROM stations LIMIT 5").fetchall()
 for row in result:
     print(row)
+
