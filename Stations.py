@@ -6,15 +6,14 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Text, Float, Date
 
-#poprawki
-measurements = pd.read_csv('clean_measure.csv')
-stations = pd.read_csv('clean_stations.csv')
-
-engine = create_engine("sqlite:///database.db")
+engine = create_engine("sqlite:///database.db", echo=True)
 conn = engine.connect()
 
 Base = declarative_base()
 
+#poprawki
+measurements = pd.read_csv('/clean_measure.csv')
+stations = pd.read_csv('/clean_stations.csv')
 
 class Measurement(Base):
     __tablename__ = "measurements"
@@ -63,13 +62,13 @@ result = conn.execute("SELECT * FROM stations LIMIT 5").fetchall()
 for row in result:
     print(row)
 
-ad1 = stations.select().where(stations.c.country == "US").limit(5)
+ad1 = Stable.select().where(Stable.c.latitude == "21.2716").limit(6)
 result_ad1 = conn.execute(ad1)
 for row in result_ad1:
     print(row)
-    
-ad2 = stations.update().where(stations.c.station == "USC00518838").values(state ='LI')
+
+ad2 = Stable.update().where(Stable.c.station == "USC00518838").values(latitude ='111')
 result_ad2 = conn.execute(ad2)
 
-ad3 = stations.delete().where(stations.c.station == "USC00517948")
+ad3 = Stable.delete().where(Stable.c.latitude == "21.5213")
 result_ad3 = conn.execute(ad3)
