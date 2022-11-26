@@ -7,8 +7,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, Text, Float, Date
 
 #poprawki
-measurements = pd.read_csv("sqlal/clean_measure.csv")
-stations = pd.read_csv("sqlal/clean_stations.csv")
+measurements = pd.read_csv('clean_measure.csv')
+stations = pd.read_csv('clean_stations.csv')
 
 engine = create_engine("sqlite:///database.db")
 conn = engine.connect()
@@ -63,3 +63,13 @@ result = conn.execute("SELECT * FROM stations LIMIT 5").fetchall()
 for row in result:
     print(row)
 
+ad1 = stations.select().where(stations.c.country == "US").limit(5)
+result_ad1 = conn.execute(ad1)
+for row in result_ad1:
+    print(row)
+    
+ad2 = stations.update().where(stations.c.station == "USC00518838").values(state ='LI')
+result_ad2 = conn.execute(ad2)
+
+ad3 = stations.delete().where(stations.c.station == "USC00517948")
+result_ad3 = conn.execute(ad3)
